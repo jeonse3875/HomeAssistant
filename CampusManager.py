@@ -67,8 +67,6 @@ def GetAssignmentList(day):
                 info2 = driver.find_elements_by_xpath(f'//*[@id="dashboard-planner"]/div/div[{i}]/div/div[{lectureIdx}]/ol/li[{blockIdx}]/div/div[3]/div/div[1]/div[2]/a/span/span[2]')[0].text
                 infoStr += info1 + info2 + ' '
             lectureIdx += 1
-            toDoList.append(infoStr + '가 예정되어 있습니다.')
+            toDoList.append(infoStr + '가 예정되어 있습니다. ')
 
     return toDoList
-
-GetAssignmentList(5)

@@ -36,7 +36,6 @@ def GetSchedule(eventCount):
 
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print(f'Getting the upcoming {eventCount} events')
     events_result = service.events().list(calendarId='primary', timeMin=now,
                                         maxResults=eventCount, singleEvents=True,
                                         orderBy='startTime').execute()

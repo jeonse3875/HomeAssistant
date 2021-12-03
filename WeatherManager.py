@@ -39,13 +39,11 @@ def RainTypeToString(type):
         return "소나기가"
     return "없음"
 
-def GetWeatherBriefing(when): # when = 1 오늘 2 내일
+def GetWeatherBriefing(when, nx = 62, ny = 120): # when = 1 오늘 2 내일
     today = date.today().strftime('%Y%m%d')
     yesterday = (date.today() - timedelta(1)).strftime('%Y%m%d')
     tomorrow = (date.today() + timedelta(1)).strftime('%Y%m%d')
 
-    nx = 62
-    ny = 120
     response = GetWeatherData(today,"0200",nx,ny)
     resultCode = response["header"]["resultCode"]
 
@@ -91,17 +89,17 @@ def GetWeatherBriefing(when): # when = 1 오늘 2 내일
     tomoRainTypeStr = RainTypeToString(tomoRainType)
     briefing = ''
     if when == 1:
-        briefing += f'오늘 최고기온은 {todayTMX} 도, 최저기온은 {todayTMN} 입니다.\n'
+        briefing += f'오늘 최고기온은 {todayTMX} 도, 최저기온은 {todayTMN} 입니다. '
         if todayRainTypeStr != '없음':
-            briefing += f'오늘 {todayRainTime[:2]}시 {todayRainTime[2:]}분에 {str(todayRainPercent)}% 확률로 {todayRainTypeStr} 내립니다.\n'
+            briefing += f'오늘 {todayRainTime[:2]}시 {todayRainTime[2:]}분에 {str(todayRainPercent)}% 확률로 {todayRainTypeStr} 내립니다. '
         else:
-            briefing += '오늘은 비나 눈이 내리지 않습니다.\n'
+            briefing += '오늘은 비나 눈이 내리지 않습니다. '
     else:
-        briefing += f'내일 최고기온은 {tomoTMX} 도, 최저기온은 {tomoTMN} 입니다.\n'
+        briefing += f'내일 최고기온은 {tomoTMX} 도, 최저기온은 {tomoTMN} 입니다. '
         if tomoRainTypeStr != '없음':
-            briefing += f'내일 {tomoRainTime[:2]}시 {tomoRainTime[2:]}분에 {str(tomoRainPercent)}% 확률로 {tomoRainTypeStr} 내립니다.\n'
+            briefing += f'내일 {tomoRainTime[:2]}시 {tomoRainTime[2:]}분에 {str(tomoRainPercent)}% 확률로 {tomoRainTypeStr} 내립니다. '
         else:
-            briefing += '내일은 비나 눈이 내리지 않습니다.\n'
+            briefing += '내일은 비나 눈이 내리지 않습니다. '
 
     
     return briefing
