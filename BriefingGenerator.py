@@ -55,3 +55,30 @@ class BriefingProfile:
                     briefingText += sch + ' '
 
         return briefingText
+
+def GetWeatherToday():
+    return WeatherMgr.GetWeatherBriefing(1)
+
+def GetWeatherTomorrow():
+    return WeatherMgr.GetWeatherBriefing(2)
+
+def GetCampus():
+    tempText = ''
+    assignments = CampusMgr.GetAssignmentList(4)
+    for assignment in assignments:
+        tempText += assignment
+    return tempText
+
+def GetNews(keyword):
+    tempText = ''
+    newsList = NewsMgr.SearchNews(keyword,5)
+    for news in newsList:
+        tempText += news + '. '
+    return tempText
+
+def GetCalendar():
+    tempText = ''
+    scheduleList = CalendarMgr.GetSchedule(5)
+    for sch in scheduleList:
+        tempText += sch + ' '
+    return tempText
