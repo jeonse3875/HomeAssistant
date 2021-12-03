@@ -1,13 +1,19 @@
 import BriefingGenerator as Briefing
 from flask import Flask, request
 from flask_restx import Api, Resource, reqparse, Namespace,fields
+import time
+import schedule
 
 profileDict = {}
 profileDict[0] = Briefing.BriefingProfile()
 
 briefingTextDict = {}
-briefingTextDict[0] = profileDict[0].GenerateBriefingText()
 
+def UpdateBriefingText():
+    for pId, profile in profileDict.items():
+        briefingTextDict[pId] = profileDict[pId].GenerateBriefingText()
+
+UpdateBriefingText()
 curId = 0
 
 app = Flask(__name__)
@@ -153,4 +159,5 @@ class GetCalendarText(Resource):
         
 
 if __name__ == "__main__":
+    schedule.every().day.at("03:00").do(UpdateBriefingText)
     app.run(debug=False, host='0.0.0.0', port=5000)
