@@ -2,7 +2,7 @@ import BriefingGenerator as Briefing
 from flask import Flask, request
 from flask_restx import Api, Resource, reqparse, Namespace,fields
 import time
-import schedule
+from apscheduler.schedulers.background import BackgroundScheduler
 
 profileDict = {}
 profileDict[0] = Briefing.BriefingProfile()
@@ -15,6 +15,10 @@ def UpdateBriefingText():
 
 UpdateBriefingText()
 curId = 0
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(UpdateBriefingText,'cron',hour=3,minute=10)
+sched.start()
 
 app = Flask(__name__)
 api = Api(
@@ -156,8 +160,7 @@ class GetCalendarText(Resource):
         return {
             "text": returnText
         }
-        
+
 
 if __name__ == "__main__":
-    schedule.every().day.at("03:00").do(UpdateBriefingText)
     app.run(debug=False, host='0.0.0.0', port=5000)
